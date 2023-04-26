@@ -3,7 +3,7 @@ import axios from 'axios';
 import CircularProgress from '@mui/joy/CircularProgress';
 
 
-const WeatherComponent = ({ city = "Athens", onFetch }) => {
+const WeatherComponent = ({ city, onFetch }) => {
 
     const [weatherData, setWeatherData] = useState(null);
 
@@ -14,19 +14,32 @@ const WeatherComponent = ({ city = "Athens", onFetch }) => {
             );
             console.log('Weather data:', response.data)
             setWeatherData(response.data);
-            onFetch(weatherData.current.condition.text);
-
+            if (weatherData !== null) {
+                onFetch(weatherData.current.condition.text);
+            }
         } catch (error) {
             console.error('Error fetching weather data:', error);
         }
     };
 
     useEffect(() => {
-
-        fetchWeatherData();
+        if (city !== '') {
+            fetchWeatherData();
+        }
     }, [city]);
 
-    if (!weatherData) return <CircularProgress />;
+    useEffect(() => {
+        if (weatherData !== null) {
+            onFetch(weatherData.current.condition.text);
+            console.log(weatherData.current.condition.text);
+        }
+    }, [weatherData]);
+
+    if (!weatherData) return (
+        <div>
+            <h2>Enter your city above</h2>
+        </div>
+    );
 
     const { temp_c, condition } = weatherData.current;
 

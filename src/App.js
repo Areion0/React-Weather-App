@@ -10,7 +10,7 @@ import earth from './images/earth.png';
 
 
 function App() {
-  const [city, setCity] = useState('Athens');
+  const [city, setCity] = useState('');
   const [condition, setCondition] = useState(earth);
 
   const handleSearch = (city) => {
