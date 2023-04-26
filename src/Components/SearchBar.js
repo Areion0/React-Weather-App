@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { CircularProgress } from '@mui/material';
 
 
-const SearchBar = ({ onSearch }) => {
+const SearchBar = ({ onSearch, loading }) => {
     const [city, setCity] = useState('');
 
     const handleCityChange = (event) => {
@@ -48,7 +49,15 @@ const SearchBar = ({ onSearch }) => {
                     marginBottom: '18px',
                 }}
             >
-                Search
+                {loading ? <div style={
+                    {
+                        display: 'flex',
+                        alignItems: 'center',
+                    }
+                }>
+                    <CircularProgress size="30px" sx={{ color: 'white' }}></CircularProgress>
+                </div>
+                    : 'Search'}
             </Button>
         </div>
     );

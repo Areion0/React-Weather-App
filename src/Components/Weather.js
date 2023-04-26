@@ -1,18 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const Weather = ({ city, onFetch }) => {
+const apiKey = "7923c4967394427d951110345232504";
+
+const Weather = ({ city: givenCityName, onFetch, setLoading }) => {
     const [weatherData, setWeatherData] = useState(null);
     const [error, setError] = useState(null);
+    const [cityName, setCityName] = useState(givenCityName);
 
     useEffect(() => {
         const fetchWeatherData = async () => {
             try {
+                setLoading(true);
                 const response = await axios.get(
-                    `https://api.weatherapi.com/v1/current.json?key=7923c4967394427d951110345232504&q=${city}`
+                    `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${givenCityName}`
                 );
+                setLoading(false);
                 console.log('Weather data:', response.data);
                 setWeatherData(response.data);
+                setCityName(response.data.location.name);
                 setError(null);
             } catch (error) {
                 setError('City not found');
@@ -20,10 +26,10 @@ const Weather = ({ city, onFetch }) => {
             }
         };
 
-        if (city !== '') {
+        if (givenCityName !== '') {
             fetchWeatherData();
         }
-    }, [city]);
+    }, [givenCityName]);
 
     useEffect(() => {
         if (weatherData !== null) {
@@ -52,7 +58,7 @@ const Weather = ({ city, onFetch }) => {
 
     return (
         <div>
-            <h2>Current Weather in {city}</h2>
+            <h2>Current Weather in {cityName}</h2>
             <p>{temp_c}°C</p>
             <p>{condition.text}</p>
         </div>

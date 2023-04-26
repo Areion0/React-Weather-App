@@ -12,6 +12,7 @@ import earth from './images/earth.png';
 function App() {
   const [city, setCity] = useState('');
   const [condition, setCondition] = useState(earth);
+  const [loading, setLoading] = useState(false);
 
   const handleSearch = (city) => {
     // Handle search logic here
@@ -42,8 +43,8 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={condition} alt="logo" />
-        <SearchBar onSearch={handleSearch}></SearchBar>
-        <Weather onFetch={onFetch} city={city}></Weather>
+        <SearchBar onSearch={handleSearch} loading={loading}></SearchBar>
+        <Weather onFetch={onFetch} city={city} setLoading={setLoading}></Weather>
       </header>
     </div>
   );
