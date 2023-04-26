@@ -1,9 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import sunny from '../images/sunny.png';
+import cloudy from '../images/cloudy.png';
+import partlycloudy from '../images/partlycloudy.png';
+import rain from '../images/rain.png';
+import earth from '../images/earth.png';
+
 const apiKey = "7923c4967394427d951110345232504";
 
-const Weather = ({ city: givenCityName, onFetch, setLoading }) => {
+const Weather = ({ city: givenCityName, setCondition: setConditionCallback, setLoading }) => {
     const [weatherData, setWeatherData] = useState(null);
     const [error, setError] = useState(null);
     const [cityName, setCityName] = useState(givenCityName);
@@ -21,6 +28,7 @@ const Weather = ({ city: givenCityName, onFetch, setLoading }) => {
                 setCityName(response.data.location.name);
                 setError(null);
             } catch (error) {
+                setLoading(false);
                 setError('City not found');
                 setWeatherData(null);
             }
@@ -31,12 +39,33 @@ const Weather = ({ city: givenCityName, onFetch, setLoading }) => {
         }
     }, [givenCityName]);
 
+
+    const setCondition = (weatherCondition) => {
+        switch (weatherCondition) {
+            case 'Sunny':
+                setConditionCallback(sunny)
+                break;
+            case 'Partly cloudy':
+                setConditionCallback(partlycloudy);
+                break;
+            case 'Cloudy':
+                setConditionCallback(cloudy);
+                break;
+            default:
+                setConditionCallback(earth);
+        }
+        if (weatherCondition.includes('rain')) {
+            setConditionCallback(rain);
+        }
+    }
+
     useEffect(() => {
         if (weatherData !== null) {
-            onFetch(weatherData.current.condition.text);
+            setConditionCallback(weatherData.current.condition.text);
+            setCondition(weatherData.current.condition.text);
             console.log(weatherData.current.condition.text);
         }
-    }, [weatherData, onFetch]);
+    }, [weatherData, setConditionCallback]);
 
     if (error) {
         return (
