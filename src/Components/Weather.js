@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import CircularProgress from '@mui/joy/CircularProgress';
 
-const WeatherComponent = ({ city, onFetch }) => {
+const Weather = ({ city, onFetch }) => {
     const [weatherData, setWeatherData] = useState(null);
     const [error, setError] = useState(null);
 
@@ -54,10 +54,10 @@ const WeatherComponent = ({ city, onFetch }) => {
     return (
         <div>
             <h2>Current Weather in {city}</h2>
-            <p>Temperature: {temp_c}°C</p>
-            <p>Weather Condition: {condition.text}</p>
+            <p>{temp_c}°C</p>
+            <p>{condition.text}</p>
         </div>
     );
 };
 
-export default WeatherComponent;
+export default Weather;

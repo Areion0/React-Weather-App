@@ -1,6 +1,6 @@
 import './App.css';
-import WeatherComponent from './WeatherComponent';
-import SearchBar from './SearchBar';
+import Weather from './Components/Weather';
+import SearchBar from './Components/SearchBar';
 import { useCallback, useState } from 'react';
 import sunny from './images/sunny.png';
 import cloudy from './images/cloudy.png';
@@ -43,7 +43,7 @@ function App() {
       <header className="App-header">
         <img src={condition} alt="logo" />
         <SearchBar onSearch={handleSearch}></SearchBar>
-        <WeatherComponent onFetch={onFetch} city={city}></WeatherComponent>
+        <Weather onFetch={onFetch} city={city}></Weather>
       </header>
     </div>
   );
