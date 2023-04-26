@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import CircularProgress from '@mui/joy/CircularProgress';
 
 const Weather = ({ city, onFetch }) => {
     const [weatherData, setWeatherData] = useState(null);
