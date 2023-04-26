@@ -8,7 +8,7 @@ import partlycloudy from '../images/partlycloudy.png';
 import rain from '../images/rain.png';
 import earth from '../images/earth.png';
 
-const apiKey = "7923c4967394427d951110345232504";
+const apiKey = process.env.REACT_APP_WEATHER_API_KEY.toString();
 
 const Weather = ({ city: givenCityName, setCondition: setConditionCallback, setLoading }) => {
     const [weatherData, setWeatherData] = useState(null);
@@ -38,7 +38,6 @@ const Weather = ({ city: givenCityName, setCondition: setConditionCallback, setL
             fetchWeatherData();
         }
     }, [givenCityName]);
-
 
     const setCondition = (weatherCondition) => {
         switch (weatherCondition) {
