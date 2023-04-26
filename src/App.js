@@ -1,7 +1,7 @@
 import './App.css';
 import WeatherComponent from './WeatherComponent';
 import SearchBar from './SearchBar';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import sunny from './images/sunny.png';
 import cloudy from './images/cloudy.png';
 import partlycloudy from './images/partlycloudy.png';
@@ -19,7 +19,7 @@ function App() {
     setCity(city);
   };
 
-  const onFetch = (weatherCondition) => {
+  const onFetch = useCallback((weatherCondition) => {
     switch (weatherCondition) {
       case 'Sunny':
         setCondition(sunny)
@@ -30,13 +30,13 @@ function App() {
       case 'Cloudy':
         setCondition(cloudy);
         break;
-      case 'Rain':
-        setCondition(rain);
-        break;
       default:
         setCondition(earth);
     }
-  }
+    if (weatherCondition.includes('rain')) {
+      setCondition(rain);
+    }
+  }, [setCondition])
 
   return (
     <div className="App">

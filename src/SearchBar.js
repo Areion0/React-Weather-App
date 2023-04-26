@@ -18,6 +18,12 @@ const SearchBar = ({ onSearch }) => {
         onSearch(city);
     };
 
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            handleSearch();
+        }
+    };
+
     return (
         <div style={{ display: 'flex', alignItems: 'flex-end' }}>
             <TextField
@@ -28,10 +34,12 @@ const SearchBar = ({ onSearch }) => {
                 variant="outlined"
                 color="primary"
                 margin="normal"
+                onKeyPress={handleKeyPress}
                 sx={{
                     flexGrow: 1, // Allow TextField to grow and take up remaining space
                     '& .MuiOutlinedInput-notchedOutline': { borderColor: 'white' }, // Set border color of the input field when not focused to blue
                     '& .MuiFormLabel-root': { color: 'white' }, // Set color of the label to green
+                    marginLeft: '60px', // Add margin to the left for spacing
                 }}
                 inputProps={{ style: { color: 'white' } }} // Set color of the input text to white
             />
